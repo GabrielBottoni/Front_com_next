@@ -87,7 +87,6 @@ const resolvers = {
         })
         return items.map((p) => ({ ...p, createdAt: toIso(p.createdAt), updatedAt: toIso(p.updatedAt) }))
       } catch (error) {
-        console.error('Erro ao buscar posts:', error)
         throw new Error('Erro ao buscar posts do banco de dados')
       }
     },
@@ -109,7 +108,6 @@ const resolvers = {
         })
         return items.map((n) => ({ ...n, createdAt: toIso(n.createdAt), updatedAt: toIso(n.updatedAt) }))
       } catch (error) {
-        console.error('Erro ao buscar notícias:', error)
         throw new Error('Erro ao buscar notícias do banco de dados')
       }
     },
@@ -131,7 +129,6 @@ const resolvers = {
         })
         return items.map((p) => ({ ...p, createdAt: toIso(p.createdAt), updatedAt: toIso(p.updatedAt) }))
       } catch (error) {
-        console.error('Erro ao buscar projetos:', error)
         throw new Error('Erro ao buscar projetos do banco de dados')
       }
     },
@@ -145,18 +142,13 @@ const resolvers = {
     },
 
     me: async (_, __, ctx) => {
-      try {
-        if (!ctx.session || !ctx.session.user) {
-          return null
-        }
-        return {
-          id: ctx.session.user.id,
-          name: ctx.session.user.name,
-          email: ctx.session.user.email,
-        }
-      } catch (error) {
-        console.error('Erro no resolver me:', error)
+      if (!ctx.session || !ctx.session.user) {
         return null
+      }
+      return {
+        id: ctx.session.user.id,
+        name: ctx.session.user.name,
+        email: ctx.session.user.email,
       }
     },
 
@@ -231,27 +223,27 @@ const yoga = createYoga({
       if (!request) {
         return { session: null }
       }
-      
+
       const cookie = request.headers.get('cookie') || ''
       const headersObj = {}
       request.headers.forEach((value, key) => {
         headersObj[key] = value
       })
-      
+
       const nextReq = {
         headers: headersObj,
         cookies: cookie,
       }
-      
+
       const nextRes = {
-        setHeader: () => {},
+        setHeader: () => { },
         getHeader: () => null,
       }
-      
-      const session = await getServerSession({ req: nextReq, res: nextRes }, authOptions)
+
+      const session = await getServerSession(nextReq, nextRes, authOptions)
+
       return { session }
     } catch (error) {
-      console.error('Erro ao obter sessão no GraphQL:', error)
       return { session: null }
     }
   },

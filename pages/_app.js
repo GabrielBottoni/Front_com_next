@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import client from '../lib/apollo';
 import Layout from '../components/Layout';
 import ErrorBoundary from '../components/ErrorBoundary';
-import '../lib/metamask-error-handler';
 import '../styles/globals.css';
 
 export default function App({ Component, pageProps: { session, ...pageProps } }) {

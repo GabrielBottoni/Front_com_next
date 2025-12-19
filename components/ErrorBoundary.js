@@ -1,5 +1,10 @@
 import React from 'react'
-import { isMetaMaskError } from '../lib/metamask-error-handler'
+
+const isMetaMaskError = (error) => {
+  if (!error) return false
+  const msg = (error.message || error.toString() || '').toLowerCase()
+  return msg.includes('metamask') || msg.includes('failed to connect') || msg.includes('ethereum')
+}
 
 class ErrorBoundary extends React.Component {
   constructor(props) {

@@ -4,8 +4,6 @@ const bcrypt = require('bcryptjs')
 const prisma = new PrismaClient()
 
 async function main() {
-  console.log('🌱 Iniciando seed do banco de dados...')
-
   let user = await prisma.user.findUnique({
     where: { email: 'admin@example.com' }
   })
@@ -19,9 +17,6 @@ async function main() {
         password: hashedPassword,
       },
     })
-    console.log('✅ Usuário admin criado')
-  } else {
-    console.log('ℹ️  Usuário admin já existe')
   }
 
   const posts = [
@@ -103,67 +98,44 @@ async function main() {
     },
   ]
 
-  for (const postData of posts) {
-    const existingPost = await prisma.post.findUnique({
-      where: { slug: postData.slug }
-    })
+  const created = { posts: 0, noticias: 0, projetos: 0 }
 
+  for (const postData of posts) {
+    const existingPost = await prisma.post.findUnique({ where: { slug: postData.slug } })
     if (!existingPost) {
-      await prisma.post.create({
-        data: {
-          ...postData,
-          authorId: user.id,
-        },
-      })
-      console.log(`✅ Post criado: ${postData.title}`)
-    } else {
-      console.log(`ℹ️  Post já existe: ${postData.title}`)
+      await prisma.post.create({ data: { ...postData, authorId: user.id } })
+      created.posts += 1
     }
   }
 
   for (const noticiaData of noticias) {
-    const existingNoticia = await prisma.noticia.findUnique({
-      where: { slug: noticiaData.slug }
-    })
-
+    const existingNoticia = await prisma.noticia.findUnique({ where: { slug: noticiaData.slug } })
     if (!existingNoticia) {
-      await prisma.noticia.create({
-        data: {
-          ...noticiaData,
-          authorId: user.id,
-        },
-      })
-      console.log(`✅ Notícia criada: ${noticiaData.title}`)
-    } else {
-      console.log(`ℹ️  Notícia já existe: ${noticiaData.title}`)
+      await prisma.noticia.create({ data: { ...noticiaData, authorId: user.id } })
+      created.noticias += 1
     }
   }
 
   for (const projetoData of projetos) {
-    const existingProjeto = await prisma.projeto.findUnique({
-      where: { slug: projetoData.slug }
-    })
-
+    const existingProjeto = await prisma.projeto.findUnique({ where: { slug: projetoData.slug } })
     if (!existingProjeto) {
-      await prisma.projeto.create({
-        data: {
-          ...projetoData,
-          authorId: user.id,
-        },
-      })
-      console.log(`✅ Projeto criado: ${projetoData.title}`)
-    } else {
-      console.log(`ℹ️  Projeto já existe: ${projetoData.title}`)
+      await prisma.projeto.create({ data: { ...projetoData, authorId: user.id } })
+      created.projetos += 1
     }
   }
-
-  console.log('🎉 Seed concluído com sucesso!')
+  return created
+}
+async function run(created) {
+  const result = { created }
+  console.log(`Seed summary: created ${created.posts} posts, ${created.noticias} noticias, ${created.projetos} projetos`)
+  return result
 }
 
 main()
-  .catch((e) => {
-    console.error('❌ Erro ao executar seed:', e)
-    process.exit(1)
+  .then((created) => run(created))
+  .catch((err) => {
+    console.error('Seed failed:', err)
+    process.exitCode = 1
   })
   .finally(async () => {
     await prisma.$disconnect()

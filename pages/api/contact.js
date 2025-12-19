@@ -40,8 +40,6 @@ export default async function handler(req, res) {
         errors: error.errors,
       })
     }
-
-    console.error('Erro ao salvar contato:', error)
     return res.status(500).json({ message: 'Erro interno do servidor' })
   }
 }

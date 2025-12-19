@@ -142,7 +142,6 @@ export async function getStaticProps() {
       revalidate: 60,
     }
   } catch (error) {
-    console.error("Erro ao buscar dados da API local:", error);
     return {
       props: { posts: [], noticias: [], projetos: [] },
       revalidate: 60,

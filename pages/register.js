@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -149,9 +150,9 @@ export default function Register() {
 
         <p className="mt-6 text-center text-gray-600">
           Já tem uma conta?{' '}
-          <a href="/login" className="text-primary-600 hover:text-primary-700 font-semibold">
+          <Link href="/login" className="text-primary-600 hover:text-primary-700 font-semibold">
             Fazer login
-          </a>
+          </Link>
         </p>
       </div>
     </div>

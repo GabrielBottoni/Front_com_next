@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -116,9 +117,9 @@ export default function Login() {
 
         <p className="mt-6 text-center text-gray-600">
           Não tem uma conta?{' '}
-          <a href="/register" className="text-primary-600 hover:text-primary-700 font-semibold">
+          <Link href="/register" className="text-primary-600 hover:text-primary-700 font-semibold">
             Registrar-se
-          </a>
+          </Link>
         </p>
       </div>
     </div>

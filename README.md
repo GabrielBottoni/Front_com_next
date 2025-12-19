@@ -24,7 +24,7 @@ Uma aplicação Next.js completa com autenticação, rotas dinâmicas, API route
 - **Next.js 14** - Framework React
 - **NextAuth.js** - Autenticação
 - **Prisma** - ORM para banco de dados
-- **SQLite** - Banco de dados
+- **MySQL** - Banco de dados
 - **GraphQL Yoga** - API GraphQL
 - **Tailwind CSS** - Estilização
 - **React Hook Form** - Formulários

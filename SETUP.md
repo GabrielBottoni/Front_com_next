@@ -142,12 +142,5 @@ Execute: `npx prisma migrate dev --name init`
 ### Erro: "NEXTAUTH_SECRET is not set"
 Certifique-se de que o arquivo `.env` existe e contém `NEXTAUTH_SECRET`
 
-## Deploy (Vercel)
 
-1. Suba o projeto no GitHub.
-2. Crie um projeto na Vercel apontando para o repositório.
-3. Configure as variáveis de ambiente na Vercel (`DATABASE_URL`, `NEXTAUTH_URL`, `NEXTAUTH_SECRET`).
-4. Faça o deploy.
-
-**Nota importante:** SQLite (arquivo) não é o ideal em ambiente serverless. Para produção, prefira PostgreSQL (ex.: Neon/Supabase) e use uma `DATABASE_URL` compatível.
 

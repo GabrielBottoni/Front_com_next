@@ -126,11 +126,6 @@ next-front/
 - Proteção de rotas da API com verificação de sessão
 - Validação de formulários no cliente e servidor
 
-## Deploy (Serverless)
-
-- **Sugestão**: Vercel.
-- **Importante**: SQLite em arquivo não é o ideal em ambiente serverless. Para produção, prefira **PostgreSQL** (ex.: Neon/Supabase) e ajuste `DATABASE_URL`.
-
 ## Desenvolvimento
 
 Para visualizar o banco de dados:
